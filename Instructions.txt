@@ -22,3 +22,9 @@ Should reverse complements should be considered? Yes
 
 At least a basic version implementing the alignment concepts is expected.
 However, we do not expect the implementation to be very thorough or optimized, and we won't do in-depth evaluations (we will just look at the code, and possibly run it to see if it works)
+
+
+
+To launch the project.py file, run the command:
+python3 ./project.py [reference_file] [reads_files] k [max_errors=4]
+You can add --p to display progress
