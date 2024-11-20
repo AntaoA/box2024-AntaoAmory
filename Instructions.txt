@@ -1,0 +1,24 @@
+Develop a read aligner
+
+Does it need to support errors : Yes
+How much? Let's consider <= 4 errors
+What percentage? 4%
+What's the length of the reads? 100 bp
+What's the reference genome? A draft assembly of a bacterial genome
+So we can have many sequences in the ref genome? Yes, a couple of hundreds
+What are the lengths of the sequences in the ref genome? Consider from a couple of kpb to several Mbp.
+What distance should we use? Edit distance
+Is there any requirement about the complexity? As a "customer", I "don't care" about complexity. I just need that it's "fast" on my instances
+Do we need BWT? No, seed&extend with hash tables (Python dictionaries) is enough
+Do we have to find all possible alignments? You should report all the best ones.
+What seeds should we use? Let's say contiguous k-mers, of length 10-20 (a parameter)
+Whitch type of alignment should we do? Semiglobal (i.e., end-to-end)
+What is the input? Ref genome: FASTA? Reads: FASTQ
+What is the output? A tab-separated file (streamed) with the following columns: (rname, qname, strand(F / R), start_position (0-based; position of the first used character), end_position(0-based, position of the last used character), alignment_score(edit distance), transcript_of_edits(=XDI))
+When you say 4% of errors, does it mean than anything above should be discarded? It's up to you.
+Are there any data with which we should test this? Yes, I'll give one reference genome and one query file.
+Should reverse complements should be considered? Yes
+
+
+At least a basic version implementing the alignment concepts is expected.
+However, we do not expect the implementation to be very thorough or optimized, and we won't do in-depth evaluations (we will just look at the code, and possibly run it to see if it works)
