@@ -1,12 +1,14 @@
+#! /usr/bin/env python3
+
 import sys
 import Levenshtein      # huge time saver
 
 
 """
     # Function calculating distance by memoization. Abandoned because Levenstein is MUCH more optimized.
-    
+
 def edDistRecursiveMemo1(a, b, memo, max_errors=float("inf"), current_score=0):
-    
+
     if len(a) == 0:
         return len(b) + current_score
     if len(b) == 0:
@@ -132,11 +134,11 @@ def align_reads(references, reads, k, max_errors, show_progress=False):
         best_alignments = []
         rev_comp = reverse_complement(read)
 
-        # Avoid re-aligning the same region  
+        # Avoid re-aligning the same region
         processed_positions = {seq_name: set() for seq_name in references.keys()}
 
         # Align for both orientations (forward and reverse complement)
-        for seq in [read, rev_comp]:                                                
+        for seq in [read, rev_comp]:
             for i in range(len(seq) - k + 1):
                 kmer = seq[i:i + k]
                 if kmer in kmer_index:
@@ -145,7 +147,7 @@ def align_reads(references, reads, k, max_errors, show_progress=False):
                             continue
 
                         reference = references[ref_name]
-                        
+
                         # Extend the reference region to match the read
                         start_pos = max(0, ref_pos - i)
                         end_pos = min(len(reference), start_pos + len(seq))
@@ -172,12 +174,12 @@ def align_reads(references, reads, k, max_errors, show_progress=False):
                                 elif operation[0] == "insert":
                                     end_pos -= 1
                                     change = 1
-                        
+
                         if change:
                             ref_seq = reference[start_pos:end_pos]
                             score, operations = edit_distance(seq, ref_seq, max_errors)
-                        
-                        
+
+
                         # Update best alignments
                         if score <= max_errors:
                             transcription = transcript_of_edits(operations, seq, ref_seq)
@@ -191,7 +193,7 @@ def align_reads(references, reads, k, max_errors, show_progress=False):
                         processed_positions[ref_name].update(range(start_pos, end_pos))
 
 
-        # Keep only the best alignments        
+        # Keep only the best alignments
         best_alignments.sort(key=lambda x: x[5])  # Sort by score
         if best_alignments:
             best_score = best_alignments[0][5]
